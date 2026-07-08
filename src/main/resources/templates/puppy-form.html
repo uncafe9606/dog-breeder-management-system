@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>【犬舎名】　子犬登録・編集</title>
+    </head>
+
+    
+    <body>
+        <h1>【犬舎名】子犬登録・編集</h1>
+        <a>子犬一覧→</a>
+            <a href= "http://localhost:8080/puppies" >http://localhost:8080/puppies</a>
+        <form action="/puppies" method="post" th:object="${puppy}">
+
+            <!-- 編集時のID -->
+            <input type="hidden" th:field="*{id}">
+
+            <p>
+                <label>子犬名</label><br>
+                <input type="text" th:field="*{puppyName}">
+            </p>
+
+            <p>
+                <label>犬種</label><br>
+                <input type="text" th:field="*{breed}">
+            </p>
+
+            <p>
+                <label>性別</label><br>
+                <select th:field="*{gender}">
+                    <option value="オス">オス</option>
+                    <option value="メス">メス</option>
+                </select>
+            </p>
+
+                <button type="submit">登録</button>
+        </form>
+    </body>
+</html>

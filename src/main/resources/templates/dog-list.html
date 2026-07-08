@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>【犬舎名】　成犬一覧</title>
+    </head>
+
+    <body>
+        <h1>【犬舎名】　成犬一覧</h1>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>犬名</th>
+                    <th>犬種</th>
+                    <th>性別</th>
+                    <th>毛色</th>
+                </tr>
+
+                <tr th:each="dog : ${dogs}">
+                    <td th:text="${dog.id}"></td>
+                    <td th:text="${dog.dogName}"></td>
+                    <td th:text="${dog.breed}"></td>
+                    <td th:text="${dog.gender}"></td>
+                    <td th:text="${dog.color}"></td>
+                </tr>
+            </table>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>【犬舎名】 子犬一覧</title>
+    </head>
+
+    <body>
+        <h1>【犬舎名】 子犬一覧</h1>
+        <a>子犬登録はここから→</a>
+            <a href= "http://localhost:8080/puppies/new" >http://localhost:8080/puppies/new</a>
+        
+        <br></br>
+
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>子犬名</th>
+                <th>犬種</th>
+                <th>性別</th>
+                <th>毛色</th>
+                <th>誕生日</th>
+                <th>販売状況</th>
+                <th>ママ</th>
+                <th>パパ</th>
+                <th>編集</th>
+                <th>削除</th>
+            </tr>
+
+            <tr th:each="puppy : ${puppyList}">
+                <td th:text="${puppy.id}"></td>
+                <td th:text="${puppy.puppyName}"></td>
+                <td th:text="${puppy.breed}"></td>
+                <td th:text="${puppy.gender}"></td>
+                <td th:text="${puppy.color}"></td>
+                <td th:text="${puppy.birthDate}"></td>
+                <td th:text="${puppy.status}"></td>
+                <td th:text="${puppy.motherDog != null ? puppy.motherDog.dogName : '-'}"></td>
+                <td th:text="${puppy.fatherDog != null ? puppy.fatherDog.dogName : '-'}"></td>
+
+                <td>
+                    <a th:href="@{/puppies/edit/{id}(id=${puppy.id})}">
+                        編集
+                    </a>
+                </td>
+
+                <td>
+                    <a th:href="@{/puppies/delete/{id}(id=${puppy.id})}">
+                        削除
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
