@@ -42,6 +42,12 @@ public class Puppy {
     @JoinColumn(name = "father_dog_id")
     private Dog fatherDog;
 
+    //友人犬
+    private String friendDog;
+
+    //備考
+    private String note;
+
     //------------------
     //取得と設定
     //------------------
@@ -134,5 +140,25 @@ public class Puppy {
     //父犬IDを設定する
     public void setFatherDog(Dog fatherDog) {
         this.fatherDog = fatherDog;
+    }
+
+    //お友達犬を取得する
+    public String getFriendDog() {
+        return friendDog;
+    }
+
+    //お友達犬を設定する
+    public void setFriendDog(String friendDog) {
+        this.friendDog = friendDog;
+    }
+
+    //備考を取得する
+    public String getNote() {
+        return note;
+    }
+
+    //備考を設定する
+    public void setNote(String note) {
+        this.note = note;
     }
 }

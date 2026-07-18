@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Optional;
 
+import com.example.demo.repository.DogRepository;
+
 //子犬画面を管理するController
 @Controller
 public class PuppyController {
@@ -22,6 +24,10 @@ public class PuppyController {
     //PuppyRepositoryを使えるようにする
     @Autowired
     private PuppyRepository puppyRepository;
+
+    //DogRepositoryを使えるようにする
+    @Autowired
+    private DogRepository dogRepository;
 
     //子犬一覧画面を表示する
     @GetMapping("/puppies")
@@ -43,7 +49,19 @@ public class PuppyController {
 
         // 空の子犬オブジェクトを画面へ渡す
         model.addAttribute("puppy", new Puppy());
-        
+
+        //母犬候補（メスのみ）
+        model.addAttribute(
+                "motherDogs",
+                dogRepository.findByGender("♀")
+        );
+
+        //父犬候補（オスのみ）
+        model.addAttribute(
+                "fatherDogs",
+                dogRepository.findByGender("♂")
+        );
+
         // 子犬登録画面を表示する
         return "puppy-form";
     }
@@ -71,6 +89,18 @@ public class PuppyController {
 
             //取得した子犬情報を画面へ渡す
             model.addAttribute("puppy", puppy.get());
+
+            //母犬候補（メスのみ）
+            model.addAttribute(
+                    "motherDogs",
+                    dogRepository.findByGender("メス")
+            );
+
+            //父犬候補（オスのみ）
+            model.addAttribute(
+                    "fatherDogs",
+                    dogRepository.findByGender("オス")
+            );
 
             //子犬登録画面を表示する（編集用）
             return "puppy-form";

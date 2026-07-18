@@ -5,7 +5,6 @@
         <title>【犬舎名】　子犬登録・編集</title>
     </head>
 
-    
     <body>
         <h1>【犬舎名】子犬登録・編集</h1>
         <a>子犬一覧→</a>
@@ -33,6 +32,54 @@
                 </select>
             </p>
 
+            <p>
+                <label>毛色</label><br>
+                <input type="text" th:field="*{color}">
+            </p>
+
+            <p>
+                <label>誕生日</label><br>
+                <input type="date" th:field="*{birthDate}">
+            </p>
+
+            <p>
+                <label>販売状況</label><br>
+                <select th:field="*{status}">
+                    <option value="販売中">販売中</option>
+                    <option value="商談中">商談中</option>
+                    <option value="お迎え済">お迎え済</option>
+                </select>
+            </p>
+
+            <p>
+                <label>母犬</label>
+                <select th:field="*{motherDog}">
+                    <option th:each="dog : ${motherDogs}"
+                            th:value="${dog.id}"
+                            th:text="${dog.dogName}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                <label>父犬</label>
+                <select th:field="*{fatherDog}">
+                    <option th:each="dog : ${fatherDogs}"
+                            th:value="${dog.id}"
+                            th:text="${dog.dogName}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                <label>友人犬</label><br>
+                <input type="text" th:field="*{friendDog}">
+            </p>
+
+            <p>
+                <label>備考</label><br>
+                <textarea th:field="*{note}"></textarea>
+            </p>
                 <button type="submit">登録</button>
         </form>
     </body>
