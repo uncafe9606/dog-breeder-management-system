@@ -1,0 +1,72 @@
+package com.example.demo.controller;
+
+import com.example.demo.entity.Puppy;
+import com.example.demo.entity.PuppyCare;
+import com.example.demo.repository.PuppyCareRepository;
+import com.example.demo.repository.PuppyRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+//子犬お世話記録画面を管理するController
+@Controller
+public class PuppyCareController {
+
+    //PuppyCareRepositoryを使えるようにする
+    @Autowired
+    private PuppyCareRepository puppyCareRepository;
+
+    //PuppyRepositoryを使えるようにする
+    @Autowired
+    private PuppyRepository puppyRepository;
+
+    //お世話記録画面を表示する
+    @GetMapping("/puppies/{id}/care")
+    public String careList(@PathVariable Long id, Model model) {
+
+        //子犬情報を取得する
+        Optional<Puppy> puppy = puppyRepository.findById(id);
+
+        //存在しない場合
+        if (puppy.isEmpty()) {
+            return "redirect:/puppies";
+        }
+
+        //子犬情報を画面へ渡す
+        model.addAttribute("puppy", puppy.get());
+
+        //お世話記録一覧を画面へ渡す
+        model.addAttribute(
+                "careList",
+                puppyCareRepository.findByPuppyOrderByRecordDateDescRecordTimeDesc(
+                        puppy.get()));
+
+        return "puppy-care-list";
+    }
+
+    //お世話記録登録画面を表示する
+    @GetMapping("/puppies/{id}/care/new")
+    public String newCare(@PathVariable Long id, Model model) {
+
+        //子犬情報取得
+        Optional<Puppy> puppy = puppyRepository.findById(id);
+
+        if (puppy.isEmpty()) {
+            return "redirect:/puppies";
+        }
+
+        PuppyCare care = new PuppyCare();
+
+        //どの子犬の記録か設定
+        care.setPuppy(puppy.get());
+
+        model.addAttribute("puppy", puppy.get());
+        model.addAttribute("care", care);
+
+        return "puppy-care-form";
+    }
+}
