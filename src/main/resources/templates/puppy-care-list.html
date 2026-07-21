@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>【犬舎名】子犬お世話記録一覧</title>
+    </head>
+
+    <body>
+        <h1>【犬舎名】子犬お世話記録一覧</h1>
+
+        <h2>
+            子犬：
+            <span th:text="${puppy.puppyName}"></span>
+            （
+            <span th:text="${puppy.breed}"></span>
+            ・
+            <span th:text="${puppy.gender}"></span>
+            ）
+        </h2>
+
+        <p>
+            <a th:href="@{/puppies/{id}/care/new(id=${puppy.id})}">
+                新規登録
+            </a>
+        </p>
+
+        <table border="1">
+            <tr>
+                <th>記録日</th>
+                <th>時間</th>
+                <th>ご飯量(g)</th>
+                <th>体重(g)</th>
+                <th>便の様子</th>
+                <th>備考</th>
+                <th>操作</th>
+            </tr>
+
+            <tr th:each="care : ${careList}">
+                <td th:text="${care.recordDate}"></td>
+                <td th:text="${care.recordTime}"></td>
+                <td th:text="${care.foodAmount}"></td>
+                <td th:text="${care.weight}"></td>
+                <td th:text="${care.stoolCondition}"></td>
+                <td th:text="${care.note}"></td>
+
+                <td>
+                    編集
+                    削除
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <a href="/puppies">子犬一覧へ戻る</a>
+
+    </body>
+</html>

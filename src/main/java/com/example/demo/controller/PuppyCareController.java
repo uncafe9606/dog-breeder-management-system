@@ -69,4 +69,17 @@ public class PuppyCareController {
 
         return "puppy-care-form";
     }
+
+    //お世話記録を登録する
+    @PostMapping("/puppies/care")
+    public String saveCare(@ModelAttribute PuppyCare care) {
+
+        //DBへ保存
+        puppyCareRepository.save(care);
+
+        //一覧画面へ戻る
+        return "redirect:/puppies/" +
+                care.getPuppy().getId() +
+                "/care";
+    }
 }

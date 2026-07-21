@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>【犬舎名】子犬お世話記録登録</title>
+    </head>
+
+    <body>
+
+        <h1>【犬舎名】子犬お世話記録</h1>
+
+        <h2>
+             子犬：
+            <span th:text="${puppy.puppyName}"></span>
+            （
+            <span th:text="${puppy.breed}"></span>
+            ・
+            <span th:text="${puppy.gender}"></span>
+            ）
+        </h2>
+
+        <form th:action="@{/puppies/care}" method="post" th:object="${care}">
+
+            <!-- 編集時用 -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- 子犬ID -->
+            <input type="hidden" th:field="*{puppy.id}">
+
+            <p>
+                <label>記録日</label><br>
+                <input type="date" th:field="*{recordDate}">
+            </p>
+
+            <p>
+                <label>記録時間</label><br>
+                <input type="time" th:field="*{recordTime}">
+            </p>
+
+            <p>
+                <label>ご飯量(g)</label><br>
+                <input type="number"
+                    th:field="*{foodAmount}"
+                    min="0"
+                    step="1">
+            </p>
+
+            <p>
+                <label>体重(g)</label><br>
+                <input type="number"
+                    th:field="*{weight}"
+                    min="0"
+                    step="1">
+            </p>
+
+            <p>
+                <label>便の様子</label><br>
+                <select th:field="*{stoolCondition}">
+                    <option value="普通">普通</option>
+                    <option value="柔らかい">柔らかい</option>
+                    <option value="硬い">硬い</option>
+                    <option value="下痢">下痢</option>
+                    <option value="便秘">便秘</option>
+                </select>
+            </p>
+
+            <p>
+                <label>備考</label><br>
+                <textarea th:field="*{note}" rows="5" cols="40"></textarea>
+            </p>
+
+            <button type="submit">登録</button>
+
+        </form>
+
+            <br>
+
+            <a th:href="@{/puppies/{id}/care(id=${puppy.id})}">
+                お世話記録一覧へ戻る
+            </a>
+    </body>
+</html>

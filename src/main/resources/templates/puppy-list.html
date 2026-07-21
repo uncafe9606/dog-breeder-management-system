@@ -25,8 +25,9 @@
                 <th>販売状況</th>
                 <th>ママ</th>
                 <th>パパ</th>
-                <th>編集</th>
-                <th>削除</th>
+                <th>📝</th>
+                <th>🗑️</th>
+                <th>🐶</th>
             </tr>
 
             <tr th:each="puppy : ${puppyList}">
@@ -51,6 +52,12 @@
                         削除
                     </a>
                 </td>
+
+                <td>
+                    <a th:href="@{/puppies/{id}/care(id=${puppy.id})}">
+                        お世話記録
+                    </a>
+                </td>               
             </tr>
         </table>
     </body>
