@@ -3,14 +3,13 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>【犬舎名】子犬お世話記録一覧</title>
+        <title>子犬お世話記録一覧 【犬舎名】</title>
     </head>
 
     <body>
         <h1>【犬舎名】子犬お世話記録一覧</h1>
 
         <h2>
-            子犬：
             <span th:text="${puppy.puppyName}"></span>
             （
             <span th:text="${puppy.breed}"></span>
@@ -21,38 +20,61 @@
 
         <p>
             <a th:href="@{/puppies/{id}/care/new(id=${puppy.id})}">
-                新規登録
+                ＋ お世話記録を登録
             </a>
         </p>
 
-        <table border="1">
-            <tr>
-                <th>記録日</th>
-                <th>時間</th>
-                <th>ご飯量(g)</th>
-                <th>体重(g)</th>
-                <th>便の様子</th>
-                <th>備考</th>
-                <th>操作</th>
-            </tr>
+        <h3>お世話記録一覧</h3>
+            <p th:if="${#lists.isEmpty(careList)}">
+                まだお世話記録がありません。
+            </p>
 
-            <tr th:each="care : ${careList}">
-                <td th:text="${care.recordDate}"></td>
-                <td th:text="${care.recordTime}"></td>
-                <td th:text="${care.foodAmount}"></td>
-                <td th:text="${care.weight}"></td>
-                <td th:text="${care.stoolCondition}"></td>
-                <td th:text="${care.note}"></td>
+            <table border="1" th:if="${!#lists.isEmpty(careList)}">
 
-                <td>
-                    編集
-                    削除
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>記録日</th>
+                    <th>時間</th>
+                    <th>ご飯量(g)</th>
+                    <th>体重(g)</th>
+                    <th>便の様子</th>
+                    <th>備考</th>
+                    <th>編集/削除</th>
+                </tr>
+            </thead>
+
+        <tbody>
+                <tr th:each="care : ${careList}">
+                    <td th:text="${care.recordDate}"></td>
+                    <td th:text="${care.recordTime}"></td>
+                    <td>
+                        <span th:text="${care.foodAmount}"></span> g
+                    </td>
+                    <td>
+                        <span th:text="${care.weight}"></span> g
+                    </td>
+                    <td th:text="${care.stoolCondition}"></td>
+                    <td th:text="${care.note}"></td>
+                    <td>
+                        <a th:href="@{/puppies/care/edit/{id}(id=${care.id})}">
+                            編集
+                        </a>
+
+                        |
+
+                        <a th:href="@{/puppies/care/delete/{id}(id=${care.id})}"
+                        onclick="return confirm('この記録を削除しますか？');">
+                            削除
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <br>
-        <a href="/puppies">子犬一覧へ戻る</a>
+    <a href="/puppies">
+        ← 子犬一覧へ戻る
+    </a>
 
     </body>
 </html>

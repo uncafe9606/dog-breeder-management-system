@@ -82,4 +82,66 @@ public class PuppyCareController {
                 care.getPuppy().getId() +
                 "/care";
     }
+
+    //お世話記録編集画面を表示する
+@GetMapping("/puppies/care/edit/{id}")
+public String editCare(@PathVariable Long id, Model model) {
+
+    //IDからお世話記録を取得する
+    Optional<PuppyCare> care = puppyCareRepository.findById(id);
+
+    //記録が存在する場合
+    if (care.isPresent()) {
+
+        //お世話記録を画面へ渡す
+        model.addAttribute("care", care.get());
+
+        //子犬情報を画面へ渡す
+        model.addAttribute("puppy", care.get().getPuppy());
+
+        //登録画面を編集画面として使用する
+        return "puppy-care-form";
+    }
+
+    //記録が存在しない場合は子犬一覧へ戻る
+    return "redirect:/puppies";
+    }
+
+    //お世話記録を編集して保存する
+    @PostMapping("/puppies/care/edit")
+    public String updateCare(@ModelAttribute PuppyCare care) {
+
+        //DBの既存データを更新する
+        puppyCareRepository.save(care);
+
+        //編集した子犬のお世話記録一覧へ戻る
+        return "redirect:/puppies/" +
+                care.getPuppy().getId() +
+                "/care";
+    }
+
+    //お世話記録を削除する
+    @GetMapping("/puppies/care/delete/{id}")
+    public String deleteCare(@PathVariable Long id) {
+
+        //削除対象のお世話記録を取得する
+        Optional<PuppyCare> care = puppyCareRepository.findById(id);
+
+        //記録が存在する場合
+        if (care.isPresent()) {
+
+            //子犬IDを取得する
+            Long puppyId = care.get().getPuppy().getId();
+
+            //お世話記録を削除する
+            puppyCareRepository.deleteById(id);
+
+            //削除した子犬のお世話記録一覧へ戻る
+            return "redirect:/puppies/" + puppyId + "/care";
+        }
+
+        //記録が存在しない場合は子犬一覧へ戻る
+        return "redirect:/puppies";
+    }
+    
 }
